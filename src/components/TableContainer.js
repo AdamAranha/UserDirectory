@@ -5,6 +5,7 @@ import Table from './table';
 
 function TableContainer() {
     const [usersState, setUsersState] = useState([]);
+    const [order, setOrder] = useState('desc')
 
     useEffect(() => {
         getPeople()
@@ -13,31 +14,37 @@ function TableContainer() {
     async function getPeople() {
         API.getPeople().then(res => {
             setUsersState(res)
-            console.log(usersState)
+            console.log(res)
         })
     }
 
     function sortName() {
-        console.log("sorting by name");
-
-        const sorted = usersState.sort((a, b) => {
-            if (a.name.first < b.name.first) {
+        let newList = [...usersState]
+        newList.sort((a, b) => {
+            let fa = a.name.first.toLowerCase(),
+                fb = b.name.first.toLowerCase();
+            if (fa < fb) {
                 return -1;
-            } else if (a.name.first > b.name.first) {
-                return 1;
-            } else {
-                return 0;
             }
-        });
-
-        setUsersState([...sorted]);
+            if (fa > fb) {
+                return 1;
+            }
+            return 0;
+        })
+        if (order === 'desc') {
+            setOrder('asc')
+            newList.reverse()
+        } else {
+            setOrder('desc')
+        }
+        setUsersState(newList);
     }
 
     return (
         <div>
             <Table
                 list={usersState}
-                sortName={sortName}
+                sort={sortName}
             />
         </div>
     )

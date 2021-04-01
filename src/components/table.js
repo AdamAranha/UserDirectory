@@ -8,11 +8,10 @@ function Table(props) {
                 <thead>
                     <tr style={{ fontStyle: "italic" }}>
                         <th scope="col"></th>
-                        <th scope="col">Name
-                    <button style={{ border: 0, background: "white" }} onClick={props.sortName}>
-                                <i className="fas fa-sort"></i>
-                            </button>
+                        <th scope="col">
+                            First Name <i class="fas fa-sort" onClick={props.sort} ></i>
                         </th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">Location</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Email</th>
@@ -25,8 +24,9 @@ function Table(props) {
                             <td className="align-middle text-center">
                                 <img src={user.picture.medium} className="rounded-circle" alt="Employee Profile" />
                             </td>
-                            <td className="align-middle">{user.name.first} {user.name.last}</td>
-                            <td className="align-middle">{user.location.state}</td>
+                            <td className="align-middle">{user.name.first} </td>
+                            <td className="align-middle">{user.name.last}</td>
+                            <td className="align-middle">{user.location.country}</td>
                             <td className="align-middle">{user.phone}</td>
                             <td className="align-middle">{user.email}</td>
                         </tr>
