@@ -1,38 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import API from '../utils/API';
-import Table from '../components/Table/Table';
+import Header from '../components/Header/Header'
+import TableWrapper from '../components/Table/TableWrapper'
 
-function TableContainer() {
-    const [people, setPeople] = useState([]);
-
-    useEffect(() => {
-        setPeople(API.getPeople())
-    }, []);
-
-    function sortName() {
-        console.log("sorting by name");
-
-        const sorted = people.sort((a, b) => {
-            if (a.name.first < b.name.first) {
-                return -1;
-            } else if (a.name.first > b.name.first) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
-
-        setPeople([...sorted]);
-    }
-
+function MainPage() {
     return (
+
         <div>
-            <Table
-                list={people}
-                sortName={sortName}
-            />
+            <Header />
+            <TableWrapper />
         </div>
     )
 }
 
-export default TableContainer;
+export default MainPage

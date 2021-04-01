@@ -1,13 +1,11 @@
 
 import './App.css';
-import Header from './components/Header/Header'
-import TableContainer from './components/TableContainer';
+import MainPage from './pages/MainPage'
 
 function App() {
   return (
     <div>
-      <Header />
-      <TableContainer />
+      <MainPage />
     </div>
   );
 }

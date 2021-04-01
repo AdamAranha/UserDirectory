@@ -1,9 +1,8 @@
 import React from 'react';
-import Container from "./container";
 
 function Table(props) {
     return (
-        <Container>
+        <div className='container'>
             <table className="table table-striped mt-2">
                 <thead>
                     <tr style={{ fontStyle: "italic" }}>
@@ -33,7 +32,7 @@ function Table(props) {
                     ))}
                 </tbody>
             </table>
-        </Container>
+        </div>
     )
 }
 

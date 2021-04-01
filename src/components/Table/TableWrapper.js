@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import API from '../utils/API'
+import API from '../../utils/API'
 import Table from './table';
 
-function TableContainer() {
-    const [peopleList, setpeopleList] = useState([]);
+function TableWrapper() {
+    const [employeeList, setemployeeList] = useState([]);
     const [order, setOrder] = useState('desc')
     const [input, setInput] = useState('')
 
@@ -13,13 +13,13 @@ function TableContainer() {
 
     async function getPeople() {
         API.getPeople().then(res => {
-            setpeopleList(res)
+            setemployeeList(res)
             console.log(res)
         })
     }
 
     function sortFirstName() {
-        let newList = [...peopleList]
+        let newList = [...employeeList]
         newList.sort((a, b) => {
             let fa = a.name.first.toLowerCase(),
                 fb = b.name.first.toLowerCase();
@@ -37,7 +37,7 @@ function TableContainer() {
         } else {
             setOrder('desc')
         }
-        setpeopleList(newList);
+        setemployeeList(newList);
     }
 
     function handleInputChange(event) {
@@ -45,23 +45,31 @@ function TableContainer() {
         console.log(`[Input]`, input)
     }
 
+    function filter() {
+        let queryArray
+        queryArray = employeeList.filter(country => country.location.country.indexOf(input) > -1)
+        setemployeeList(queryArray)
+    }
 
+    function reset() {
+        getPeople()
+    }
 
 
     return (
-
-
         <div>
-            <div class="input-group my-3 container">
-                <input value={input} onChange={handleInputChange} type="text" class="form-control" placeholder="Enter Country Name" aria-label="Country Search" aria-describedby="button-addon2" />
-                <button class="btn btn-outline-primary" type="button" id="button-addon2" >Search</button>
+            <div className="input-group my-3 container">
+                <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={filter}>Search</button>
+                <input value={input} onChange={handleInputChange} type="text" className="form-control" placeholder="Enter Country Name" aria-label="Country Search" aria-describedby="button-addon2" />
+
+                <button className="btn btn-outline-danger" type="button" id="button-addon2" onClick={reset}> X </button>
             </div>
             <Table
-                list={peopleList}
+                list={employeeList}
                 sort={sortFirstName}
             />
         </div>
     )
 }
 
-export default TableContainer;
+export default TableWrapper;
