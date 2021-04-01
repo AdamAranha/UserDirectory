@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import API from '../utils/API'
-import axios from 'axios';
 import Table from './table';
 
 function TableContainer() {
-    const [usersState, setUsersState] = useState([]);
+    const [peopleList, setpeopleList] = useState([]);
     const [order, setOrder] = useState('desc')
+    const [input, setInput] = useState('')
 
     useEffect(() => {
         getPeople()
@@ -13,13 +13,13 @@ function TableContainer() {
 
     async function getPeople() {
         API.getPeople().then(res => {
-            setUsersState(res)
+            setpeopleList(res)
             console.log(res)
         })
     }
 
-    function sortName() {
-        let newList = [...usersState]
+    function sortFirstName() {
+        let newList = [...peopleList]
         newList.sort((a, b) => {
             let fa = a.name.first.toLowerCase(),
                 fb = b.name.first.toLowerCase();
@@ -37,14 +37,28 @@ function TableContainer() {
         } else {
             setOrder('desc')
         }
-        setUsersState(newList);
+        setpeopleList(newList);
     }
 
+    function handleInputChange(event) {
+        setInput(event.target.value)
+        console.log(`[Input]`, input)
+    }
+
+
+
+
     return (
+
+
         <div>
+            <div class="input-group my-3 container">
+                <input value={input} onChange={handleInputChange} type="text" class="form-control" placeholder="Enter Country Name" aria-label="Country Search" aria-describedby="button-addon2" />
+                <button class="btn btn-outline-primary" type="button" id="button-addon2" >Search</button>
+            </div>
             <Table
-                list={usersState}
-                sort={sortName}
+                list={peopleList}
+                sort={sortFirstName}
             />
         </div>
     )
